@@ -1,0 +1,23 @@
+name: Run test
+on:
+    push:
+    workflow_dispatch:
+        inputs:
+            パラメーター名:
+                description: '説明'
+                required: true
+                default: 'デフォルト値'
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+              with:
+                ruby-version: '3.2.0'
+            - run: bundle install
+            - run: bundle exec rake
+
+            - run: bundle exec rspec
